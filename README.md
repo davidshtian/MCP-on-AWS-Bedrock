@@ -11,18 +11,18 @@ This project demonstrates how to implement and use Anthropic's Model Context Pro
 - UV package manager
 
 ## Project Structure
-- `client.py`: Main client implementation for interacting with Bedrock and MCP tools
+- `client_stdio.py`: Main client implementation for interacting with Bedrock and MCP tools using stdio mode
+- `client_sse.py`: Main client implementation for interacting with Bedrock and MCP tools using sse mode
 - `mcp_simple_tool/`: Directory containing the MCP tool implementation
   - `server.py`: MCP tool server implementation
   - `__main__.py`: Entry point for the tool
 - `pyproject.toml`: Project dependencies and configuration
 
 ## Usage
-Run the client with:
+Run the stdio client with:
 ```bash
-uv venv --python 3.13.1
 uv pip install boto3
-uv run client.py
+uv run client_stdio.py
 ```
 
 The client will:
@@ -30,6 +30,14 @@ The client will:
 2. Start the MCP tool server
 3. List available tools and convert them to the format required by Bedrock
 4. Handle communication between Bedrock and the MCP tools
+
+Run the sse client with:
+```bash
+uv run mcp-simple-tool --transport sse --port 8000
+
+uv pip install boto3
+uv run client_sse.py
+```
 
 ## Features
 - Seamless integration with AWS Bedrock runtime
