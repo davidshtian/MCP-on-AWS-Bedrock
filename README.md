@@ -33,9 +33,11 @@ The client will:
 
 Run the sse client with:
 ```bash
+# server
+uv pip install boto3 uvicorn
 uv run mcp-simple-tool --transport sse --port 8000
 
-uv pip install boto3
+# client
 uv run client_sse.py
 ```
 
