@@ -1,5 +1,5 @@
 # MCP on AWS Bedrock
-A simple and clear example for implementation and understanding Anthropic MCP (on AWS Bedrock, with Nova).
+A simple and clear example for implementation and understanding Anthropic MCP (on AWS Bedrock).
 
 <a href="https://glama.ai/mcp/servers/cuhom1oc17">
   <img width="380" height="200" src="https://glama.ai/mcp/servers/cuhom1oc17/badge" />
