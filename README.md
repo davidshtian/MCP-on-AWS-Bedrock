@@ -48,7 +48,7 @@ uv run client_sse.py
 ```
 
 ## Features
-- Seamless integration with AWS Bedrock runtime
+- Seamless integration with AWS Bedrock runtime using Converse API
 - Tool format conversion for Bedrock compatibility
 - Asynchronous communication handling
 - Structured logging for debugging
