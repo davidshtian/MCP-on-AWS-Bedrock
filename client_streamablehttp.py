@@ -2,8 +2,8 @@ import asyncio
 import json
 import boto3
 import logging
-from mcp import ClientSession, StdioServerParameters
-from mcp.client.stdio import stdio_client
+from mcp import ClientSession
+from mcp.client.streamable_http import streamablehttp_client
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -38,10 +38,12 @@ async def main():
     # Initialize Bedrock client
     bedrock = boto3.client("bedrock-runtime")
 
-    async with stdio_client(
-        StdioServerParameters(command="uv", args=["run", "mcp_simple_tool"])
-    ) as (read, write):
-        async with ClientSession(read, write) as session:
+    async with streamablehttp_client("http://localhost:8000/mcp") as (
+        read_stream,
+        write_stream,
+        _,
+    ):
+        async with ClientSession(read_stream, write_stream) as session:
             await session.initialize()
 
             # List available tools and convert to serializable format
@@ -76,6 +78,7 @@ async def main():
             ]
 
             while True:
+
                 # Call Bedrock with Nova Pro model
                 response = bedrock.converse(
                     modelId="us.amazon.nova-pro-v1:0",
@@ -97,6 +100,7 @@ async def main():
                 if stop_reason == "tool_use":
                     # Tool use requested. Call the tool and send the result to the model.
                     tool_requests = response["output"]["message"]["content"]
+                    print(tool_requests)
                     for tool_request in tool_requests:
                         if "toolUse" in tool_request:
                             tool = tool_request["toolUse"]

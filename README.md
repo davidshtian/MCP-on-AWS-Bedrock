@@ -10,42 +10,39 @@ A simple and clear example for implementation and understanding Anthropic MCP (o
 ## Overview
 This project demonstrates how to implement and use Anthropic's Model Context Protocol (MCP) with AWS Bedrock. It provides a client implementation that can interact with MCP-enabled tools through AWS Bedrock's runtime service.
 
+## Updates 2025-05-10: Streamable HTTP
+
+- Add support for [Streamable HTTP](https://github.com/modelcontextprotocol/python-sdk/releases/tag/v1.8.0)
+- Rewrite the URL fetching MCP server `fetch_url_mcp_server.py` that demonstrates different transport types
+
+### Usage Instructions
+
+Run the server with default stdio settings (no transport parameter):
+```bash
+uv run fetch_url_mcp_server.py
+
+# client
+uv run client_stdio.py
+```
+
+Run with streamable-http transport on default port (8000):
+```bash
+python fetch_url_mcp_server.py --transport streamable-http
+
+# client
+uv run client_streamablehttp.py
+```
+
+Run with streamable-http transport on custom port:
+```bash
+python fetch_url_mcp_server.py --transport streamable-http --port 8080
+```
+
 ## Prerequisites
 - Python 3.10 or higher
 - AWS account with Bedrock access
 - Configured AWS credentials
 - UV package manager
-
-## Project Structure
-- `client_stdio.py`: Main client implementation for interacting with Bedrock and MCP tools using stdio mode
-- `client_sse.py`: Main client implementation for interacting with Bedrock and MCP tools using sse mode
-- `mcp_simple_tool/`: Directory containing the MCP tool implementation
-  - `server.py`: MCP tool server implementation
-  - `__main__.py`: Entry point for the tool
-- `pyproject.toml`: Project dependencies and configuration
-
-## Usage
-Run the stdio client with:
-```bash
-uv pip install boto3
-uv run client_stdio.py
-```
-
-The client will:
-1. Initialize a connection to AWS Bedrock
-2. Start the MCP tool server
-3. List available tools and convert them to the format required by Bedrock
-4. Handle communication between Bedrock and the MCP tools
-
-Run the sse client with:
-```bash
-# server
-uv pip install boto3 uvicorn
-uv run mcp-simple-tool --transport sse --port 8000
-
-# client
-uv run client_sse.py
-```
 
 ## Features
 - Seamless integration with AWS Bedrock runtime using Converse API
