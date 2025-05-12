@@ -39,7 +39,7 @@ async def main():
     bedrock = boto3.client("bedrock-runtime")
 
     async with stdio_client(
-        StdioServerParameters(command="uv", args=["run", "mcp_simple_tool"])
+        StdioServerParameters(command="uv", args=["run", "fetch_url_mcp_server.py"])
     ) as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
